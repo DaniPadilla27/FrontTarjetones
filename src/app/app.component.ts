@@ -1,12 +1,15 @@
-import { Component } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { Component } from "@angular/core"
+import { RouterOutlet } from "@angular/router"
+import { AuthService } from "./services/auth.service"
+
 
 @Component({
-  selector: 'app-root',
+  selector: "app-root",
+  standalone: true,
   imports: [RouterOutlet],
-  templateUrl: './app.component.html',
-  styleUrl: './app.component.scss'
+  template: "<router-outlet></router-outlet>",
 })
 export class AppComponent {
-  title = 'tarjetones_front';
+  title = "tarjetones_front"
+  
 }
