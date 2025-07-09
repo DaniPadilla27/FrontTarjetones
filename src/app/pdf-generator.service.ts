@@ -197,7 +197,7 @@ export class PdfGeneratorService {
         margin: 0;
         padding: 0;
         background: white;
-        font-family: Arial, sans-serif;
+        font-family: Montserrat, sans-serif;
         box-sizing: border-box;
       ">
         <!-- Imagen de fondo del frente -->
@@ -330,7 +330,7 @@ export class PdfGeneratorService {
         margin: 0;
         padding: 0;
         background: white;
-        font-family: Arial, sans-serif;
+        font-family: Montserrat, sans-serif;
         box-sizing: border-box;
       ">
         <!-- Imagen de fondo del reverso -->
