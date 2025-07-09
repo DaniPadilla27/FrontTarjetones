@@ -219,7 +219,7 @@ export class PdfGeneratorService {
         <div style="
           position: absolute;
           top: 35mm;
-          left: 40mm;
+          left: 37mm;
           width: 70mm;
           height: 85mm;
           z-index: 2;
@@ -261,7 +261,7 @@ export class PdfGeneratorService {
         <div style="
           position: absolute;
           top: 125mm;
-          left: 42mm;
+          left: 39mm;
           width: 66mm;
           z-index: 3;
           background: rgba(255, 255, 255, 0.95);
@@ -284,7 +284,7 @@ export class PdfGeneratorService {
         <!-- Información del Dr. - Posición específica para PDF -->
         <div style="
           position: absolute;
-          top: 170mm;
+          top: 175mm;
           left: 18mm;
           width: 114mm;
           z-index: 3;
@@ -304,7 +304,7 @@ export class PdfGeneratorService {
         <!-- Vigencia - Posición específica para PDF -->
         <div style="
           position: absolute;
-          top: 200mm;
+          top: 203mm;
           left: 38mm;
           z-index: 3;
           padding: 2mm 4mm;
@@ -352,7 +352,7 @@ export class PdfGeneratorService {
         <div style="
           position: absolute;
           top: 35mm;
-          left: 40mm;
+          left: 37mm;
           width: 70mm;
           height: 85mm;
           z-index: 2;
@@ -387,6 +387,30 @@ export class PdfGeneratorService {
             </div>
           `
       }
+        </div>
+
+                <!-- Nombre del operador - Posición específica para PDF -->
+        <div style="
+          position: absolute;
+          top: 118mm;
+          left: 39mm;
+          width: 66mm;
+          z-index: 3;
+          background: rgba(255, 255, 255, 0.95);
+          padding: 3mm;
+          text-align: center;
+          border-radius: 4px;
+          box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        ">
+          <div style="
+            font-size: 14px; 
+            font-weight: bold; 
+            color: #000; 
+            line-height: 1.3;
+            text-transform: uppercase;
+          ">
+            ${tarjeton.nombreOperador}
+          </div>
         </div>
         
         <!-- Datos del tarjetón - Posiciones específicas para PDF -->
@@ -510,7 +534,7 @@ export class PdfGeneratorService {
           <!-- Vigencia -->
           <div style="
             position: absolute;
-            top: 200mm;
+            top: 203mm;
             left: 38mm;
             padding: 2mm 4mm;
             border-radius: 4px;
