@@ -219,7 +219,7 @@ export class PdfGeneratorService {
         <div style="
           position: absolute;
           top: 35mm;
-          left: 32mm;
+          left: 34mm;
           width: 70mm;
           height: 85mm;
           z-index: 2;
@@ -352,7 +352,7 @@ export class PdfGeneratorService {
         <div style="
           position: absolute;
           top: 35mm;
-          left: 32mm;
+          left: 34mm;
           width: 70mm;
           height: 85mm;
           z-index: 2;
@@ -396,7 +396,6 @@ export class PdfGeneratorService {
           left: 39mm;
           width: 66mm;
           z-index: 3;
-          background: rgba(255, 255, 255, 0.95);
           padding: 3mm;
           text-align: center;
           border-radius: 4px;
