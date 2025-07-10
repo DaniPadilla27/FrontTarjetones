@@ -218,7 +218,7 @@ export class PdfGeneratorService {
         <!-- Fotografía del operador - Medidas específicas para PDF -->
         <div style="
           position: absolute;
-          top: 35mm;
+          top: 35mm; 
           left: 34mm;
           width: 70mm;
           height: 85mm;
@@ -547,5 +547,3 @@ export class PdfGeneratorService {
     `
   }
 }
-
-
