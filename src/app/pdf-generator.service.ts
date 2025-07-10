@@ -202,7 +202,7 @@ export class PdfGeneratorService {
       ">
         <!-- Imagen de fondo del frente -->
         <img 
-          src="assets/images/Frente.pdf.png"
+          src="assets/images/Frente.pdf (4).png"
           style="
             position: absolute;
             top: 0;
@@ -219,7 +219,7 @@ export class PdfGeneratorService {
         <div style="
           position: absolute;
           top: 35mm; 
-          left: 34mm;
+          left: 36mm;
           width: 70mm;
           height: 85mm;
           z-index: 2;
@@ -260,9 +260,9 @@ export class PdfGeneratorService {
         <!-- Nombre del operador - Posición específica para PDF -->
         <div style="
           position: absolute;
-          top: 125mm;
-          left: 39mm;
-          width: 66mm;
+          top: 120mm;
+          left: 28mm;
+          width: 80mm; 
           z-index: 3;
           background: rgba(255, 255, 255, 0.95);
           padding: 3mm;
@@ -304,7 +304,7 @@ export class PdfGeneratorService {
         <!-- Vigencia - Posición específica para PDF -->
         <div style="
           position: absolute;
-          top: 203mm;
+          top: 199mm;
           left: 38mm;
           z-index: 3;
           padding: 2mm 4mm;
@@ -352,7 +352,7 @@ export class PdfGeneratorService {
         <div style="
           position: absolute;
           top: 35mm;
-          left: 34mm;
+          left: 36mm;
           width: 70mm;
           height: 85mm;
           z-index: 2;
@@ -393,8 +393,8 @@ export class PdfGeneratorService {
         <div style="
           position: absolute;
           top: 118mm;
-          left: 39mm;
-          width: 66mm;
+          left: 35mm;
+          width: 75mm;
           z-index: 3;
           padding: 3mm;
           text-align: center;
@@ -419,7 +419,7 @@ export class PdfGeneratorService {
           <div style="
             position: absolute;
             top: 125mm;
-            left: 22mm;
+            left: 19mm;
             padding: 2mm 3mm;
             border-radius: 3px;
           ">
@@ -431,7 +431,7 @@ export class PdfGeneratorService {
           <div style="
             position: absolute;
             top: 132mm;
-            left: 22mm;
+            left: 19mm;
             padding: 2mm 3mm;
             border-radius: 3px;
           ">
@@ -443,7 +443,7 @@ export class PdfGeneratorService {
           <div style="
             position: absolute;
             top: 139mm;
-            left: 22mm;
+            left: 19mm;
             padding: 2mm 3mm;
             border-radius: 3px;
           ">
@@ -455,7 +455,7 @@ export class PdfGeneratorService {
           <div style="
             position: absolute;
             top: 146mm;
-            left: 22mm;
+            left: 19mm;
             padding: 2mm 3mm;
             border-radius: 3px;
           ">
@@ -467,7 +467,7 @@ export class PdfGeneratorService {
           <div style="
             position: absolute;
             top: 153mm;
-            left: 22mm;
+            left: 19mm;
             padding: 2mm 3mm;
             border-radius: 3px;
           ">
@@ -479,7 +479,7 @@ export class PdfGeneratorService {
           <div style="
             position: absolute;
             top: 160mm;
-            left: 22mm;
+            left: 19mm;
             padding: 2mm 3mm;
             border-radius: 3px;
           ">
@@ -494,7 +494,7 @@ export class PdfGeneratorService {
           <div style="
             position: absolute;
             top: 167mm;
-            left: 22mm;
+            left: 19mm;
             padding: 2mm 3mm;
             border-radius: 3px;
             width: 106mm;
@@ -511,7 +511,7 @@ export class PdfGeneratorService {
           <div style="
             position: absolute;
             top: 175mm;
-            left: 22mm;
+            left: 19mm;
             width: 106mm;
             padding: 3mm;
             border-radius: 3px;
@@ -533,7 +533,7 @@ export class PdfGeneratorService {
           <!-- Vigencia -->
           <div style="
             position: absolute;
-            top: 203mm;
+            top: 199mm;
             left: 38mm;
             padding: 2mm 4mm;
             border-radius: 4px;
