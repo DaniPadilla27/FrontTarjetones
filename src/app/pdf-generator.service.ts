@@ -202,7 +202,7 @@ export class PdfGeneratorService {
       ">
         <!-- Imagen de fondo del frente -->
         <img 
-          src="assets/images/Frente.pdf (4).png"
+          src="assets/images/Frente.pdf (5).png"
           style="
             position: absolute;
             top: 0;
