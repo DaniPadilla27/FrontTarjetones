@@ -114,7 +114,7 @@ export class TarjetonesComponent {
   }
 
   loadCatalogos() {
-    const baseUrl = "https://backtarjetones.onrender.com/api/catalogos"
+    const baseUrl = "https://wstarjetones.transporteshidalgoti.org/api/catalogos"
     Promise.all([
       fetch(`${baseUrl}/coordinaciones`).then((res) => res.json()),
       fetch(`${baseUrl}/municipios`).then((res) => res.json()),
@@ -201,7 +201,7 @@ export class TarjetonesComponent {
     if (this.filters.folioOperador) params.idOperador = this.filters.folioOperador
 
     const queryString = new URLSearchParams(params).toString()
-    fetch(`https://backtarjetones.onrender.com/api/tarjetones/filtrar?${queryString}`)
+    fetch(`https://wstarjetones.transporteshidalgoti.org/api/tarjetones/filtrar?${queryString}`)
       .then((res) => res.json())
       .then((data) => {
         this.tarjetonesData = data.map((item: any) => ({

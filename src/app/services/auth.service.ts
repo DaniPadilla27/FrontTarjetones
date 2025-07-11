@@ -27,7 +27,7 @@ export interface ErrorResponse {
   providedIn: "root",
 })
 export class AuthService {
-  private apiUrl = "https://backtarjetones.onrender.com/api"
+  private apiUrl = "https://wstarjetones.transporteshidalgoti.org/api"
 
   constructor(private http: HttpClient) {}
 
