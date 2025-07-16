@@ -224,7 +224,7 @@ export class TarjetonesComponent {
           fotografia: item.fotografia,
           fechaAlta: item.fechaAlta,
         }))
-        
+        console.log("🔍 Tarjetones filtrados:", this.tarjetonesData)
         this.hasSearched = true
       })
       .catch((err) => {
