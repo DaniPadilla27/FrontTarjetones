@@ -7,7 +7,8 @@ export interface TarjetonData {
   folio: string
   operador: string
   emision: string
-  vence: string
+  vence: string,
+  fechaAlta: string
   tipoTramite: string
   coordinacion: string
   nombreOperador: string
@@ -125,38 +126,68 @@ export class PdfGeneratorService {
     })
     return Promise.all(promises).then(() => { })
   }
-/** 🔧 Convierte "DD/MM/YYYY" → Date (sin librerías externas) */
-private parseDDMMYYYY(fecha: string): Date {
-  const [d, m, a] = fecha.split("/").map(Number)
-  // mes - 1 porque en JS los meses van de 0 a 11
-  return new Date(a, m - 1, d)
-}
-
-private calcularAntiguedad(en: string, hasta: string): number {
-  // 👉 Si vienen en ISO (“YYYY‑MM‑DD”), new Date() ya los entiende;
-  //    si no, los parseamos manualmente.
-  const fechaInicio = en.includes("/") ? this.parseDDMMYYYY(en) : new Date(en)
-  const fechaFin    = hasta.includes("/") ? this.parseDDMMYYYY(hasta) : new Date(hasta)
-
-  // Validamos rápido
-  if (isNaN(fechaInicio.getTime()) || isNaN(fechaFin.getTime())) {
-    console.warn("⚠️ Fechas inválidas:", { en, hasta })
-    return 0
+  /** 🔧 Convierte "DD/MM/YYYY" → Date (sin librerías externas) */
+  private parseDDMMYYYY(fecha: string): Date {
+    const [d, m, a] = fecha.split("/").map(Number)
+    // mes - 1 porque en JS los meses van de 0 a 11
+    return new Date(a, m - 1, d)
   }
 
-  let edad = fechaFin.getFullYear() - fechaInicio.getFullYear()
-  const mesFin = fechaFin.getMonth()
-  const mesInicio = fechaInicio.getMonth()
+  private calcularAntiguedad(
+    en: string,
+    hasta: string,
+    tipoTramite: string,
+    fechaAlta?: string
+  ): number {
+    // 👉 Si es "Expedición", la antigüedad es 0
+    if (tipoTramite === "Expedición") return 0
 
-  if (
-    mesFin < mesInicio ||
-    (mesFin === mesInicio && fechaFin.getDate() < fechaInicio.getDate())
-  ) {
-    edad--
+    // 👉 Si hay fechaAlta válida, usarla como inicio
+    if (fechaAlta) {
+      const fechaInicio = new Date(fechaAlta)
+      const fechaFin = new Date()  // siempre la fecha actual cuando hay fechaAlta
+
+      if (isNaN(fechaInicio.getTime()) || isNaN(fechaFin.getTime())) {
+        console.warn("⚠️ Fechas inválidas (fechaAlta):", { fechaAlta })
+        return 0
+      }
+
+
+      let edad = fechaFin.getFullYear() - fechaInicio.getFullYear()
+      const mesFin = fechaFin.getMonth()
+      const diaFin = fechaFin.getDate()
+      const mesInicio = fechaInicio.getMonth()
+      const diaInicio = fechaInicio.getDate()
+
+      if (mesFin < mesInicio || (mesFin === mesInicio && diaFin < diaInicio)) {
+        edad--
+      }
+
+      return edad < 0 ? 0 : edad
+    }
+
+    // 👉 Si no hay fechaAlta, usar lógica normal con `en` y `hasta`
+    const fechaInicio = en.includes("/") ? this.parseDDMMYYYY(en) : new Date(en)
+    const fechaFin = hasta.includes("/") ? this.parseDDMMYYYY(hasta) : new Date(hasta)
+
+    if (isNaN(fechaInicio.getTime()) || isNaN(fechaFin.getTime())) {
+      console.warn("⚠️ Fechas inválidas:", { en, hasta })
+      return 0
+    }
+
+    let edad = fechaFin.getFullYear() - fechaInicio.getFullYear()
+    const mesFin = fechaFin.getMonth()
+    const diaFin = fechaFin.getDate()
+    const mesInicio = fechaInicio.getMonth()
+    const diaInicio = fechaInicio.getDate()
+
+    if (mesFin < mesInicio || (mesFin === mesInicio && diaFin < diaInicio)) {
+      edad--
+    }
+
+    return edad < 0 ? 0 : edad
   }
 
-  return edad < 0 ? 0 : edad
-}
 
 
   private convertBufferToBase64(buffer: any): string {
@@ -200,7 +231,29 @@ private calcularAntiguedad(en: string, hasta: string): number {
   private getCurrentYear(): string {
     return new Date().getFullYear().toString()
   }
-  
+  getEmisionDay(emision: string): string {
+    if (!emision) return ""
+    const [day] = emision.split("/")
+    return day
+  }
+
+  getEmisionMonth(emision: string): string {
+    if (!emision) return ""
+    const [, month] = emision.split("/")
+    const meses = [
+      "enero", "febrero", "marzo", "abril", "mayo", "junio",
+      "julio", "agosto", "septiembre", "octubre", "noviembre", "diciembre"
+    ]
+    return meses[parseInt(month, 10) - 1] || ""
+  }
+
+  getEmisionYear(emision: string): string {
+    if (!emision) return ""
+    const [, , year] = emision.split("/")
+    return year
+  }
+
+
   // MÉTODOS ESPECÍFICOS PARA PDF (independientes del HTML)
   private createPdfFrenteHtml(tarjeton: TarjetonData): string {
     const fotografiaBase64 = this.convertBufferToBase64(tarjeton.fotografia)
@@ -336,7 +389,13 @@ private calcularAntiguedad(en: string, hasta: string): number {
 
   private createPdfReversoHtml(tarjeton: TarjetonData): string {
     const fotografiaBase64 = this.convertBufferToBase64(tarjeton.fotografia)
-    const antiguedad = this.calcularAntiguedad(tarjeton.emision, tarjeton.vence)
+    const antiguedad = this.calcularAntiguedad(
+      tarjeton.emision,
+      tarjeton.vence,
+      tarjeton.tipoTramite,
+      tarjeton.fechaAlta
+    )
+
 
     return `
       <div style="
@@ -516,11 +575,11 @@ private calcularAntiguedad(en: string, hasta: string): number {
             width: 106mm;
           ">
             <span style="font-size: 11px; color: #374151;">Pachuca de Soto, Hidalgo a </span>
-            <span style="font-size: 11px; font-weight: bold; color: #000;">${this.getCurrentDay()}</span>
-            <span style="font-size: 11px; color: #374151;"> de </span>
-            <span style="font-size: 11px; font-weight: bold; color: #000;">${this.getCurrentMonth()}</span>
-            <span style="font-size: 11px; color: #374151;"> del </span>
-            <span style="font-size: 11px; font-weight: bold; color: #000;">${this.getCurrentYear()}</span>
+    <span style="font-size: 11px; font-weight: bold; color: #000;">${this.getEmisionDay(tarjeton.emision)}</span>
+    <span style="font-size: 11px; color: #374151;"> de </span>
+    <span style="font-size: 11px; font-weight: bold; color: #000;">${this.getEmisionMonth(tarjeton.emision)}</span>
+    <span style="font-size: 11px; color: #374151;"> del </span>
+    <span style="font-size: 11px; font-weight: bold; color: #000;">${this.getEmisionYear(tarjeton.emision)}</span>
           </div>
 
           <!-- Texto Legal -->

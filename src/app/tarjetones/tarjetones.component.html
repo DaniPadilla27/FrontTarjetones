@@ -24,7 +24,7 @@
             </svg>
             Filtros
           </button>
-                    <!-- Botón de Cerrar Sesión -->
+          <!-- Botón de Cerrar Sesión -->
           <button (click)="logout()"
             class="inline-flex items-center gap-2 px-4 py-2 border border-red-300 rounded-md shadow-sm bg-white text-sm font-medium text-red-700 hover:bg-red-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 transition-colors">
             <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -54,7 +54,8 @@
     </div>
 
     <!-- Mensaje cuando no hay datos -->
-    <div *ngIf="!isLoading && tarjetonesData.length === 0 && !hasSearched" class="bg-white rounded-lg shadow-sm border-0 p-8">
+    <div *ngIf="!isLoading && tarjetonesData.length === 0 && !hasSearched"
+      class="bg-white rounded-lg shadow-sm border-0 p-8">
       <div class="text-center">
         <svg class="mx-auto h-12 w-12 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -78,7 +79,8 @@
     </div>
 
     <!-- Mensaje cuando no hay resultados después de buscar -->
-    <div *ngIf="!isLoading && tarjetonesData.length === 0 && hasSearched" class="bg-white rounded-lg shadow-sm border-0 p-8">
+    <div *ngIf="!isLoading && tarjetonesData.length === 0 && hasSearched"
+      class="bg-white rounded-lg shadow-sm border-0 p-8">
       <div class="text-center">
         <svg class="mx-auto h-12 w-12 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -107,15 +109,19 @@
               <th class="px-4 py-3 text-left text-xs font-medium uppercase tracking-wide text-gray-500">Operador</th>
               <th class="px-4 py-3 text-left text-xs font-medium uppercase tracking-wide text-gray-500">Emisión</th>
               <th class="px-4 py-3 text-left text-xs font-medium uppercase tracking-wide text-gray-500">Vence</th>
-              <th class="px-4 py-3 text-left text-xs font-medium uppercase tracking-wide text-gray-500">Tipo Trámite</th>
-              <th class="px-4 py-3 text-left text-xs font-medium uppercase tracking-wide text-gray-500">Coordinación</th>
-              <th class="px-4 py-3 text-left text-xs font-medium uppercase tracking-wide text-gray-500">Nombre Operador</th>
+              <th class="px-4 py-3 text-left text-xs font-medium uppercase tracking-wide text-gray-500">Tipo Trámite
+              </th>
+              <th class="px-4 py-3 text-left text-xs font-medium uppercase tracking-wide text-gray-500">Coordinación
+              </th>
+              <th class="px-4 py-3 text-left text-xs font-medium uppercase tracking-wide text-gray-500">Nombre Operador
+              </th>
               <th class="px-4 py-3 text-left text-xs font-medium uppercase tracking-wide text-gray-500">Género</th>
               <th class="px-4 py-3 text-left text-xs font-medium uppercase tracking-wide text-gray-500">Municipio</th>
               <th class="px-4 py-3 text-left text-xs font-medium uppercase tracking-wide text-gray-500">Modalidad</th>
               <th class="px-4 py-3 text-left text-xs font-medium uppercase tracking-wide text-gray-500">Tipo</th>
               <th class="px-4 py-3 text-left text-xs font-medium uppercase tracking-wide text-gray-500">Estatus</th>
-              <th class="px-4 py-3 text-left text-xs font-medium uppercase tracking-wide text-gray-500">Folio Admon.</th>
+              <th class="px-4 py-3 text-left text-xs font-medium uppercase tracking-wide text-gray-500">Folio Admon.
+              </th>
               <th class="px-4 py-3 text-left text-xs font-medium uppercase tracking-wide text-gray-500">Folio Pago</th>
             </tr>
           </thead>
@@ -357,45 +363,45 @@
     </div>
 
     <!-- PDF Preview Modal -->
-<div *ngIf="isPdfModalOpen" class="fixed inset-0 z-50 overflow-y-auto" (click)="closePdfModal()">
-  <div class="flex min-h-screen items-center justify-center p-4">
-    <div class="fixed inset-0 bg-black bg-opacity-50"></div>
-    <div class="relative bg-white rounded-lg shadow-xl max-w-6xl w-full max-h-[90vh] overflow-y-auto"
-      (click)="$event.stopPropagation()">
-      <!-- Modal Header -->
-      <div class="flex items-center justify-between p-6 border-b bg-gray-50">
-        <div class="flex items-center gap-3">
-          <svg class="h-6 w-6 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-              d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z">
-            </path>
-          </svg>
-          <div>
-            <h2 class="text-lg font-semibold text-gray-900">Vista Previa del Tarjetón</h2>
-            <p class="text-sm text-gray-600">Folio: {{ selectedTarjeton?.folio }} - {{
-              selectedTarjeton?.nombreOperador }}</p>
-          </div>
-        </div>
-        <button (click)="closePdfModal()" class="text-gray-400 hover:text-gray-600 text-2xl font-bold">
-          ×
-        </button>
-      </div>
-      <!-- Modal Body - Vista Previa -->
-      <div class="p-6 bg-gray-100">
-        <div class="flex gap-6 justify-center">
-          <!-- PÁGINA 1: Frente con fotografía -->
-          <div class="bg-white rounded-lg shadow-lg" style="width: 150mm; min-height: 212mm;">
-            <div class="text-center mb-2">
-              <span class="text-sm font-medium text-gray-600">Página 1 - Frente</span>
+    <div *ngIf="isPdfModalOpen" class="fixed inset-0 z-50 overflow-y-auto" (click)="closePdfModal()">
+      <div class="flex min-h-screen items-center justify-center p-4">
+        <div class="fixed inset-0 bg-black bg-opacity-50"></div>
+        <div class="relative bg-white rounded-lg shadow-xl max-w-6xl w-full max-h-[90vh] overflow-y-auto"
+          (click)="$event.stopPropagation()">
+          <!-- Modal Header -->
+          <div class="flex items-center justify-between p-6 border-b bg-gray-50">
+            <div class="flex items-center gap-3">
+              <svg class="h-6 w-6 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z">
+                </path>
+              </svg>
+              <div>
+                <h2 class="text-lg font-semibold text-gray-900">Vista Previa del Tarjetón</h2>
+                <p class="text-sm text-gray-600">Folio: {{ selectedTarjeton?.folio }} - {{
+                  selectedTarjeton?.nombreOperador }}</p>
+              </div>
             </div>
-            <div class="relative w-full bg-white rounded-lg overflow-hidden"
-              style="min-height: 212mm; width: 150mm;">
-              <!-- Imagen de frente como fondo -->
-              <img src="assets/images/tarjeton-frente1.jpg" class="absolute inset-0 w-full h-full object-contain"
-                style="z-index: 1;" alt="Frente del tarjetón" />
-              
-              <!-- Fotografía del operador en el recuadro -->
-              <div class="absolute" style="
+            <button (click)="closePdfModal()" class="text-gray-400 hover:text-gray-600 text-2xl font-bold">
+              ×
+            </button>
+          </div>
+          <!-- Modal Body - Vista Previa -->
+          <div class="p-6 bg-gray-100">
+            <div class="flex gap-6 justify-center">
+              <!-- PÁGINA 1: Frente con fotografía -->
+              <div class="bg-white rounded-lg shadow-lg" style="width: 150mm; min-height: 212mm;">
+                <div class="text-center mb-2">
+                  <span class="text-sm font-medium text-gray-600">Página 1 - Frente</span>
+                </div>
+                <div class="relative w-full bg-white rounded-lg overflow-hidden"
+                  style="min-height: 212mm; width: 150mm;">
+                  <!-- Imagen de frente como fondo -->
+                  <img src="assets/images/tarjeton-frente1.jpg" class="absolute inset-0 w-full h-full object-contain"
+                    style="z-index: 1;" alt="Frente del tarjetón" />
+
+                  <!-- Fotografía del operador en el recuadro -->
+                  <div class="absolute" style="
                 top: 37mm;
                 left: 42mm;
                 width: 65mm;
@@ -404,18 +410,17 @@
                 background: white;
                 border: 1px solid #ccc;
               ">
-                <img *ngIf="selectedTarjeton?.fotografia?.data"
-                  [src]="convertBufferToBase64(selectedTarjeton?.fotografia)"
-                  class="w-full h-full object-cover"
-                  alt="Fotografía del operador" />
-                <div *ngIf="!selectedTarjeton?.fotografia?.data" 
-                  class="w-full h-full flex items-center justify-center bg-gray-100 text-gray-500 text-xs">
-                  Sin fotografía
-                </div>
-              </div>
+                    <img *ngIf="selectedTarjeton?.fotografia?.data"
+                      [src]="convertBufferToBase64(selectedTarjeton?.fotografia)" class="w-full h-full object-cover"
+                      alt="Fotografía del operador" />
+                    <div *ngIf="!selectedTarjeton?.fotografia?.data"
+                      class="w-full h-full flex items-center justify-center bg-gray-100 text-gray-500 text-xs">
+                      Sin fotografía
+                    </div>
+                  </div>
 
-              <!-- Nombres y Apellidos -->
-              <div class="absolute text-center" style="
+                  <!-- Nombres y Apellidos -->
+                  <div class="absolute text-center" style="
                 top: 130mm;
                 left: 44mm;
                 width: 62mm;
@@ -423,13 +428,13 @@
                 background: rgba(255, 255, 255, 0.9);
                 padding: 2mm;
               ">
-                <div style="font-size: 12px; font-weight: bold; color: #000; line-height: 1.2;">
-                  {{ selectedTarjeton?.nombreOperador }}
-                </div>
-              </div>
+                    <div style="font-size: 12px; font-weight: bold; color: #000; line-height: 1.2;">
+                      {{ selectedTarjeton?.nombreOperador }}
+                    </div>
+                  </div>
 
-              <!-- Datos estáticos del Dr. José Antonio Pérez Sánchez -->
-              <div class="absolute text-center" style="
+                  <!-- Datos estáticos del Dr. José Antonio Pérez Sánchez -->
+                  <div class="absolute text-center" style="
                 top: 175mm;
                 left: 20mm;
                 width: 110mm;
@@ -437,43 +442,43 @@
                 background: rgba(255, 255, 255, 0.9);
                 padding: 2mm;
               ">
-          <div style="font-size: 10px; font-weight: bold; color: #000; margin-bottom: 2mm;">
-            Dr. José Antonio Pérez Sánchez
-          </div>
-          <div style="font-size: 9px; color: #000; line-height: 1.2;">
-            Encargado de la Dirección General del STCH
-          </div>
-        </div>
+                    <div style="font-size: 10px; font-weight: bold; color: #000; margin-bottom: 2mm;">
+                      Dr. José Antonio Pérez Sánchez
+                    </div>
+                    <div style="font-size: 9px; color: #000; line-height: 1.2;">
+                      Encargado de la Dirección General del STCH
+                    </div>
+                  </div>
 
-        <!-- Vigencia -->
-        <div class="absolute" style="
+                  <!-- Vigencia -->
+                  <div class="absolute" style="
           top: 203mm;
           left: 40mm;
           z-index: 3;
           background: rgba(255, 255, 255, 0.9);
           padding: 1mm 3mm;
         ">
-          <div style="font-size: 11px; font-weight: bold; color: #8B4513;">
-             {{ selectedTarjeton?.vence }}
-          </div>
-        </div>
+                    <div style="font-size: 11px; font-weight: bold; color: #8B4513;">
+                      {{ selectedTarjeton?.vence }}
+                    </div>
+                  </div>
 
-      </div>
-    </div>
+                </div>
+              </div>
 
-    <!-- PÁGINA 2: Reverso con datos -->
-    <div class="bg-white rounded-lg shadow-lg" style="width: 150mm; min-height: 212mm;">
-      <div class="text-center mb-2">
-        <span class="text-sm font-medium text-gray-600">Página 2 - Reverso</span>
-      </div>
-      <div id="tarjeton-preview" class="relative w-full bg-white rounded-lg overflow-hidden"
-        style="min-height: 212mm; width: 150mm;">
-        <!-- Imagen de fondo -->
-        <img src="assets/images/tarjeton-reverso.jpg" class="absolute inset-0 w-full h-full object-contain"
-          style="z-index: 1;" alt="Fondo del tarjetón" />
-        
-        <!-- Fotografía del operador en el recuadro del reverso -->
-        <div class="absolute" style="
+              <!-- PÁGINA 2: Reverso con datos -->
+              <div class="bg-white rounded-lg shadow-lg" style="width: 150mm; min-height: 212mm;">
+                <div class="text-center mb-2">
+                  <span class="text-sm font-medium text-gray-600">Página 2 - Reverso</span>
+                </div>
+                <div id="tarjeton-preview" class="relative w-full bg-white rounded-lg overflow-hidden"
+                  style="min-height: 212mm; width: 150mm;">
+                  <!-- Imagen de fondo -->
+                  <img src="assets/images/tarjeton-reverso.jpg" class="absolute inset-0 w-full h-full object-contain"
+                    style="z-index: 1;" alt="Fondo del tarjetón" />
+
+                  <!-- Fotografía del operador en el recuadro del reverso -->
+                  <div class="absolute" style="
                 top: 37mm;
                 left: 42mm;
                 width: 65mm;
@@ -482,163 +487,166 @@
                 background: white;
                 border: 1px solid #ccc;
         ">
-          <img *ngIf="selectedTarjeton?.fotografia?.data"
-            [src]="convertBufferToBase64(selectedTarjeton?.fotografia)"
-            class="w-full h-full object-cover"
-            alt="Fotografía del operador" />
-          <div *ngIf="!selectedTarjeton?.fotografia?.data" 
-            class="w-full h-full flex items-center justify-center bg-gray-100 text-gray-500 text-xs">
-            Sin foto
-          </div>
-        </div>
-        
-        <!-- Overlay con los datos posicionados -->
-        <div class="absolute inset-0" style="z-index: 3;">
-          <!-- Folio de Operador -->
-          <div class="absolute" style="
+                    <img *ngIf="selectedTarjeton?.fotografia?.data"
+                      [src]="convertBufferToBase64(selectedTarjeton?.fotografia)" class="w-full h-full object-cover"
+                      alt="Fotografía del operador" />
+                    <div *ngIf="!selectedTarjeton?.fotografia?.data"
+                      class="w-full h-full flex items-center justify-center bg-gray-100 text-gray-500 text-xs">
+                      Sin foto
+                    </div>
+                  </div>
+
+                  <!-- Overlay con los datos posicionados -->
+                  <div class="absolute inset-0" style="z-index: 3;">
+                    <!-- Folio de Operador -->
+                    <div class="absolute" style="
             top: 120mm; 
             left: 25mm;
             background: rgba(255, 255, 255, 0.9);
             padding: 1mm;
           ">
-            <span style="font-size: 10px; color: #000;">Folio de Operador: </span>
-            <span style="font-size: 10px; font-weight: bold; color: #000;">{{ selectedTarjeton?.operador }}</span>
-          </div>
+                      <span style="font-size: 10px; color: #000;">Folio de Operador: </span>
+                      <span style="font-size: 10px; font-weight: bold; color: #000;">{{ selectedTarjeton?.operador
+                        }}</span>
+                    </div>
 
-          <!-- Municipio -->
-          <div class="absolute" style="
+                    <!-- Municipio -->
+                    <div class="absolute" style="
             top: 125mm; 
             left: 25mm;
             padding: 1mm;
           ">
-            <span style="font-size: 10px; color: #000;">Municipio: </span>
-            <span style="font-size: 10px; font-weight: bold; color: #000;">{{ selectedTarjeton?.municipio }}</span>
-          </div>
+                      <span style="font-size: 10px; color: #000;">Municipio: </span>
+                      <span style="font-size: 10px; font-weight: bold; color: #000;">{{ selectedTarjeton?.municipio
+                        }}</span>
+                    </div>
 
-          <!-- Tipo de Trámite -->
-          <div class="absolute" style="
+                    <!-- Tipo de Trámite -->
+                    <div class="absolute" style="
             top: 131mm; 
             left: 25mm;
             padding: 1mm;
           ">
-            <span style="font-size: 10px; color: #000;">Tipo de Trámite: </span>
-            <span style="font-size: 10px; font-weight: bold; color: #000;">{{ selectedTarjeton?.tipoTramite }}</span>
-          </div>
+                      <span style="font-size: 10px; color: #000;">Tipo de Trámite: </span>
+                      <span style="font-size: 10px; font-weight: bold; color: #000;">{{ selectedTarjeton?.tipoTramite
+                        }}</span>
+                    </div>
 
-          <!-- Modalidad -->
-          <div class="absolute" style="
+                    <!-- Modalidad -->
+                    <div class="absolute" style="
             top: 137mm; 
             left: 25mm;
             padding: 1mm;
           ">
-            <span style="font-size: 10px; color: #000;">Modalidad: </span>
-            <span style="font-size: 10px; font-weight: bold; color: #000;">{{ selectedTarjeton?.modalidad === 'INDIVIDUAL' ? 'Individual' : 'Transporte Colectivo' }}</span>
-          </div>
+                      <span style="font-size: 10px; color: #000;">Modalidad: </span>
+                      <span style="font-size: 10px; font-weight: bold; color: #000;">{{ selectedTarjeton?.modalidad ===
+                        'INDIVIDUAL' ? 'Individual' : 'Transporte Colectivo' }}</span>
+                    </div>
 
-          <!-- Tipo de Tarjetón -->
-          <div class="absolute" style="
+                    <!-- Tipo de Tarjetón -->
+                    <div class="absolute" style="
             top: 143mm; 
             left: 25mm;
             padding: 1mm;
           ">
-            <span style="font-size: 10px; color: #000;">Tipo de Tarjetón: </span>
-            <span style="font-size: 10px; font-weight: bold; color: #000;">{{ selectedTarjeton?.tipo }}</span>
-          </div>
+                      <span style="font-size: 10px; color: #000;">Tipo de Tarjetón: </span>
+                      <span style="font-size: 10px; font-weight: bold; color: #000;">{{ selectedTarjeton?.tipo }}</span>
+                    </div>
 
-          <!-- Antigüedad -->
-          <div class="absolute" style="
+                    <!-- Antigüedad -->
+                    <div class="absolute" style="
             top: 149mm; 
             left: 25mm;
             padding: 1mm;
           ">
-            <span style="font-size: 10px; color: #000;">Antigüedad: </span>
-            <span style="font-size: 10px; font-weight: bold; color: #000;">{{ getAntiguedad() }}</span>
-          </div>
+                      <span style="font-size: 10px; color: #000;">Antigüedad: </span>
+                      <span style="font-size: 10px; font-weight: bold; color: #000;">{{ getAntiguedad() }}</span>
+                    </div>
 
-          <!-- Fecha y lugar -->
-          <div class="absolute" style="
+                    <!-- Fecha y lugar -->
+                    <div class="absolute" style="
             top: 155mm; 
             left: 25mm;
             padding: 1mm;
           ">
-            <span style="font-size: 10px; color: #000;">Pachuca de Soto, Hidalgo a </span> 
-            <span style="font-size: 10px; font-weight: bold; color: #000;">{{ getCurrentDay() }}</span>
-            <span style="font-size: 10px; color: #000;"> de </span>
-            <span style="font-size: 10px; font-weight: bold; color: #000;">{{ getCurrentMonth() }}</span>
-            <span style="font-size: 10px; color: #000;"> del </span>
-            <span style="font-size: 10px; font-weight: bold; color: #000;">{{ getCurrentYear() }}</span>
-          </div>
+                      <span style="font-size: 10px; color: #000;">Pachuca de Soto, Hidalgo a </span>
+                      <span style="font-size: 10px; font-weight: bold; color: #000;">{{ getEmisionDay() }}</span>
+                      <span style="font-size: 10px; color: #000;"> de </span>
+                      <span style="font-size: 10px; font-weight: bold; color: #000;">{{ getEmisionMonth() }}</span>
+                      <span style="font-size: 10px; color: #000;"> del </span>
+                      <span style="font-size: 10px; font-weight: bold; color: #000;">{{ getEmisionYear() }}</span>
+                    </div>
 
-          <!-- Texto Legal -->
-          <div class="absolute" style="
+                    <!-- Texto Legal -->
+                    <div class="absolute" style="
             top: 169mm; 
             left: 25mm; 
             width: 100mm;
             padding: 2mm;
           ">
-            <p style="font-size: 9px; color: #000; line-height: 1.2; text-align: justify; margin: 0;">
-              El Titular del presente documento, es sujeto obligado a lo establecido en los numerales 9
-              fracción I, V, XVII, XXVI, 10, 17, 19, 112 al 122, 151, 152 y 154 de la Ley de Movilidad y
-              Transporte para el Estado de Hidalgo; 109 al 125 del Reglamento de Ley de Movilidad y
-              Transporte para el Estado de Hidalgo
-            </p>
-          </div>
+                      <p style="font-size: 9px; color: #000; line-height: 1.2; text-align: justify; margin: 0;">
+                        El Titular del presente documento, es sujeto obligado a lo establecido en los numerales 9
+                        fracción I, V, XVII, XXVI, 10, 17, 19, 112 al 122, 151, 152 y 154 de la Ley de Movilidad y
+                        Transporte para el Estado de Hidalgo; 109 al 125 del Reglamento de Ley de Movilidad y
+                        Transporte para el Estado de Hidalgo
+                      </p>
+                    </div>
 
-          <!-- Vigencia -->
-          <div class="absolute" style="
+                    <!-- Vigencia -->
+                    <div class="absolute" style="
           top: 203mm;
           left: 40mm;
           z-index: 3;
           background: rgba(255, 255, 255, 0.9);
           padding: 1mm 3mm;
           ">
-            <div style="font-size: 11px; font-weight: bold; color: #8B4513;">
-               {{ selectedTarjeton?.vence }}
+                      <div style="font-size: 11px; font-weight: bold; color: #8B4513;">
+                        {{ selectedTarjeton?.vence }}
+                      </div>
+                    </div>
+
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
+          <!-- Modal Footer -->
+          <div class="flex justify-between items-center p-6 border-t bg-gray-50">
+            <div class="text-sm text-gray-600">
+              <p><strong>Operador:</strong> {{ selectedTarjeton?.nombreOperador }}</p>
+              <p><strong>Municipio:</strong> {{ selectedTarjeton?.municipio }}</p>
+              <p><strong>Modalidad:</strong> {{ selectedTarjeton?.modalidad === 'INDIVIDUAL' ? 'Individual' :
+                'Transporte Colectivo' }}</p>
+            </div>
+            <div class="flex gap-3">
+              <button (click)="closePdfModal()"
+                class="px-4 py-2 border border-gray-300 rounded-md text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500">
+                <svg class="h-4 w-4 inline mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                </svg>
+                Cancelar
+              </button>
 
+              <button (click)="downloadPdf()" [disabled]="isGeneratingPdf"
+                class="px-4 py-2 border border-transparent rounded-md text-sm font-medium text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 disabled:opacity-50 disabled:cursor-not-allowed">
+                <svg *ngIf="!isGeneratingPdf" class="h-4 w-4 inline mr-2" fill="none" stroke="currentColor"
+                  viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z">
+                  </path>
+                </svg>
+                <svg *ngIf="isGeneratingPdf" class="animate-spin h-4 w-4 inline mr-2" fill="none" viewBox="0 0 24 24">
+                  <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                  <path class="opacity-75" fill="currentColor"
+                    d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z">
+                  </path>
+                </svg>
+                {{ isGeneratingPdf ? 'Generando...' : 'Descargar PDF' }}
+              </button>
+            </div>
+          </div>
         </div>
       </div>
     </div>
-  </div>
-</div>
-      <!-- Modal Footer -->
-      <div class="flex justify-between items-center p-6 border-t bg-gray-50">
-        <div class="text-sm text-gray-600">
-          <p><strong>Operador:</strong> {{ selectedTarjeton?.nombreOperador }}</p>
-          <p><strong>Municipio:</strong> {{ selectedTarjeton?.municipio }}</p>
-          <p><strong>Modalidad:</strong> {{ selectedTarjeton?.modalidad === 'INDIVIDUAL' ? 'Individual' :
-            'Transporte Colectivo' }}</p>
-        </div>
-        <div class="flex gap-3">
-          <button (click)="closePdfModal()"
-            class="px-4 py-2 border border-gray-300 rounded-md text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500">
-            <svg class="h-4 w-4 inline mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
-            </svg>
-            Cancelar
-          </button>
-
-          <button (click)="downloadPdf()" [disabled]="isGeneratingPdf"
-            class="px-4 py-2 border border-transparent rounded-md text-sm font-medium text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 disabled:opacity-50 disabled:cursor-not-allowed">
-            <svg *ngIf="!isGeneratingPdf" class="h-4 w-4 inline mr-2" fill="none" stroke="currentColor"
-              viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z">
-              </path>
-            </svg>
-            <svg *ngIf="isGeneratingPdf" class="animate-spin h-4 w-4 inline mr-2" fill="none" viewBox="0 0 24 24">
-              <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-              <path class="opacity-75" fill="currentColor"
-                d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z">
-              </path>
-            </svg>
-            {{ isGeneratingPdf ? 'Generando...' : 'Descargar PDF' }}
-          </button>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
   </div>
 </div>

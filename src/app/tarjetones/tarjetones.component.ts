@@ -1,5 +1,5 @@
 import { Component } from "@angular/core"
-import  { Router } from "@angular/router"
+import { Router } from "@angular/router"
 import { CommonModule } from "@angular/common"
 import { FormsModule } from "@angular/forms"
 import { PdfGeneratorService } from "../pdf-generator.service"
@@ -11,6 +11,7 @@ interface Tarjeton {
   operador: string
   emision: string
   vence: string
+  fechaAlta: string
   tipoTramite: string
   coordinacion: string
   nombreOperador: string
@@ -63,7 +64,7 @@ export class TarjetonesComponent {
     private pdfGeneratorService: PdfGeneratorService,
     private router: Router,
     private authService: AuthService,
-  ) {}
+  ) { }
 
   ngOnInit() {
     // Verificar autenticación al inicializar el componente
@@ -221,7 +222,9 @@ export class TarjetonesComponent {
           folioAdmon: item.folioAdministrativo,
           folioPago: item.folioPago,
           fotografia: item.fotografia,
+          fechaAlta: item.fechaAlta,
         }))
+        
         this.hasSearched = true
       })
       .catch((err) => {
@@ -239,39 +242,62 @@ export class TarjetonesComponent {
   }
 
   /** Convierte "DD/MM/YYYY" → Date */
-private parseDDMMYYYY(dateStr: string): Date {
-  const [dia, mes, anio] = dateStr.split("/").map(Number)
-  // mes - 1 porque en JavaScript los meses van de 0 a 11
-  return new Date(anio, mes - 1, dia)
-}
-
-getAntiguedad(): string {
-  if (!this.selectedTarjeton?.emision || !this.selectedTarjeton?.vence) return ""
-
-  // 🔎 Visor de valores crudos
-  console.log("🔸 selectedTarjeton.emision:", this.selectedTarjeton.emision)
-  console.log("🔸 selectedTarjeton.vence:",   this.selectedTarjeton.vence)
-
-  // ✅ Parseamos correctamente DD/MM/YYYY
-  const fechaInicio = this.parseDDMMYYYY(this.selectedTarjeton.emision)
-  const fechaFin    = this.parseDDMMYYYY(this.selectedTarjeton.vence)
-
-  // 🔎 Confirma que ahora sí son fechas válidas
-  console.log(`🗓️ Emisión (local): ${fechaInicio.toLocaleDateString()} | Vencimiento (local): ${fechaFin.toLocaleDateString()}`)
-
-  let antiguedad = fechaFin.getFullYear() - fechaInicio.getFullYear()
-  const mesInicio = fechaInicio.getMonth()
-  const diaInicio = fechaInicio.getDate()
-  const mesFin    = fechaFin.getMonth()
-  const diaFin    = fechaFin.getDate()
-
-  if (mesFin < mesInicio || (mesFin === mesInicio && diaFin < diaInicio)) {
-    antiguedad--
+  private parseDDMMYYYY(dateStr: string): Date {
+    const [dia, mes, anio] = dateStr.split("/").map(Number)
+    // mes - 1 porque en JavaScript los meses van de 0 a 11
+    return new Date(anio, mes - 1, dia)
   }
 
-  console.log(`📅 Antigüedad calculada: ${antiguedad} año${antiguedad !== 1 ? "s" : ""}`)
-  return `${antiguedad} año${antiguedad !== 1 ? "s" : ""}`
-}
+  getAntiguedad(): string {
+    const tramite = this.selectedTarjeton?.tipoTramite
+    const fechaAltaStr = this.selectedTarjeton?.fechaAlta // formato: "1999-10-01"
+
+    // 1. Expedición → 0 años
+    if (tramite === "Expedición") {
+      return "0 años"
+    }
+
+    // 2. Si hay fechaAlta → usarla para calcular desde esa fecha hasta hoy
+    if (fechaAltaStr) {
+      const fechaAlta = new Date(fechaAltaStr)
+      const hoy = new Date()
+
+      let antiguedad = hoy.getFullYear() - fechaAlta.getFullYear()
+      const mesAlta = fechaAlta.getMonth()
+      const diaAlta = fechaAlta.getDate()
+      const mesHoy = hoy.getMonth()
+      const diaHoy = hoy.getDate()
+
+      if (mesHoy < mesAlta || (mesHoy === mesAlta && diaHoy < diaAlta)) {
+        antiguedad--
+      }
+
+      console.log(`📅 Antigüedad desde fechaAlta: ${antiguedad} año${antiguedad !== 1 ? "s" : ""}`)
+      return `${antiguedad} año${antiguedad !== 1 ? "s" : ""}`
+    }
+
+    // 3. Si no hay fechaAlta → usar lógica actual con emision y vence
+    if (!this.selectedTarjeton?.emision || !this.selectedTarjeton?.vence) return ""
+
+    const fechaInicio = this.parseDDMMYYYY(this.selectedTarjeton.emision)
+    const fechaFin = this.parseDDMMYYYY(this.selectedTarjeton.vence)
+
+    console.log(`🗓️ Emisión (local): ${fechaInicio.toLocaleDateString()} | Vencimiento (local): ${fechaFin.toLocaleDateString()}`)
+
+    let antiguedad = fechaFin.getFullYear() - fechaInicio.getFullYear()
+    const mesInicio = fechaInicio.getMonth()
+    const diaInicio = fechaInicio.getDate()
+    const mesFin = fechaFin.getMonth()
+    const diaFin = fechaFin.getDate()
+
+    if (mesFin < mesInicio || (mesFin === mesInicio && diaFin < diaInicio)) {
+      antiguedad--
+    }
+
+    console.log(`📅 Antigüedad por emisión-vencimiento: ${antiguedad} año${antiguedad !== 1 ? "s" : ""}`)
+    return `${antiguedad} año${antiguedad !== 1 ? "s" : ""}`
+  }
+
 
 
   downloadPdf(): void {
@@ -397,4 +423,27 @@ getAntiguedad(): string {
   getCurrentYear(): string {
     return new Date().getFullYear().toString()
   }
+
+  getEmisionDay(): string {
+    if (!this.selectedTarjeton?.emision) return ""
+    const [day] = this.selectedTarjeton.emision.split("/")
+    return day
+  }
+
+  getEmisionMonth(): string {
+    if (!this.selectedTarjeton?.emision) return ""
+    const [, month] = this.selectedTarjeton.emision.split("/")
+    const meses = [
+      "enero", "febrero", "marzo", "abril", "mayo", "junio",
+      "julio", "agosto", "septiembre", "octubre", "noviembre", "diciembre"
+    ]
+    return meses[parseInt(month, 10) - 1] || ""
+  }
+
+  getEmisionYear(): string {
+    if (!this.selectedTarjeton?.emision) return ""
+    const [, , year] = this.selectedTarjeton.emision.split("/")
+    return year
+  }
+
 }
