@@ -125,23 +125,39 @@ export class PdfGeneratorService {
     })
     return Promise.all(promises).then(() => { })
   }
-  private calcularAntiguedad(en: string, hasta: string): number {
-    const fechaInicio = new Date(en)
-    const fechaFin = new Date(hasta)
-    let edad = fechaFin.getFullYear() - fechaInicio.getFullYear()
+/** 🔧 Convierte "DD/MM/YYYY" → Date (sin librerías externas) */
+private parseDDMMYYYY(fecha: string): Date {
+  const [d, m, a] = fecha.split("/").map(Number)
+  // mes - 1 porque en JS los meses van de 0 a 11
+  return new Date(a, m - 1, d)
+}
 
-    const mesFin = fechaFin.getMonth()
-    const mesInicio = fechaInicio.getMonth()
+private calcularAntiguedad(en: string, hasta: string): number {
+  // 👉 Si vienen en ISO (“YYYY‑MM‑DD”), new Date() ya los entiende;
+  //    si no, los parseamos manualmente.
+  const fechaInicio = en.includes("/") ? this.parseDDMMYYYY(en) : new Date(en)
+  const fechaFin    = hasta.includes("/") ? this.parseDDMMYYYY(hasta) : new Date(hasta)
 
-    if (
-      mesFin < mesInicio ||
-      (mesFin === mesInicio && fechaFin.getDate() < fechaInicio.getDate())
-    ) {
-      edad--
-    }
-
-    return edad < 0 ? 0 : edad
+  // Validamos rápido
+  if (isNaN(fechaInicio.getTime()) || isNaN(fechaFin.getTime())) {
+    console.warn("⚠️ Fechas inválidas:", { en, hasta })
+    return 0
   }
+
+  let edad = fechaFin.getFullYear() - fechaInicio.getFullYear()
+  const mesFin = fechaFin.getMonth()
+  const mesInicio = fechaInicio.getMonth()
+
+  if (
+    mesFin < mesInicio ||
+    (mesFin === mesInicio && fechaFin.getDate() < fechaInicio.getDate())
+  ) {
+    edad--
+  }
+
+  return edad < 0 ? 0 : edad
+}
+
 
   private convertBufferToBase64(buffer: any): string {
     if (!buffer || !buffer.data) return ""

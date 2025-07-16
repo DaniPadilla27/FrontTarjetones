@@ -238,20 +238,41 @@ export class TarjetonesComponent {
     console.log("Ver detalles:", tarjeton)
   }
 
-  getAntiguedad(): string {
-    if (!this.selectedTarjeton?.emision || !this.selectedTarjeton?.vence) return ""
-    const fechaInicio = new Date(this.selectedTarjeton.emision)
-    const fechaFin = new Date(this.selectedTarjeton.vence)
-    let antiguedad = fechaFin.getFullYear() - fechaInicio.getFullYear()
-    const mesInicio = fechaInicio.getMonth()
-    const diaInicio = fechaInicio.getDate()
-    const mesFin = fechaFin.getMonth()
-    const diaFin = fechaFin.getDate()
-    if (mesFin < mesInicio || (mesFin === mesInicio && diaFin < diaInicio)) {
-      antiguedad--
-    }
-    return `${antiguedad} año${antiguedad !== 1 ? "s" : ""}`
+  /** Convierte "DD/MM/YYYY" → Date */
+private parseDDMMYYYY(dateStr: string): Date {
+  const [dia, mes, anio] = dateStr.split("/").map(Number)
+  // mes - 1 porque en JavaScript los meses van de 0 a 11
+  return new Date(anio, mes - 1, dia)
+}
+
+getAntiguedad(): string {
+  if (!this.selectedTarjeton?.emision || !this.selectedTarjeton?.vence) return ""
+
+  // 🔎 Visor de valores crudos
+  console.log("🔸 selectedTarjeton.emision:", this.selectedTarjeton.emision)
+  console.log("🔸 selectedTarjeton.vence:",   this.selectedTarjeton.vence)
+
+  // ✅ Parseamos correctamente DD/MM/YYYY
+  const fechaInicio = this.parseDDMMYYYY(this.selectedTarjeton.emision)
+  const fechaFin    = this.parseDDMMYYYY(this.selectedTarjeton.vence)
+
+  // 🔎 Confirma que ahora sí son fechas válidas
+  console.log(`🗓️ Emisión (local): ${fechaInicio.toLocaleDateString()} | Vencimiento (local): ${fechaFin.toLocaleDateString()}`)
+
+  let antiguedad = fechaFin.getFullYear() - fechaInicio.getFullYear()
+  const mesInicio = fechaInicio.getMonth()
+  const diaInicio = fechaInicio.getDate()
+  const mesFin    = fechaFin.getMonth()
+  const diaFin    = fechaFin.getDate()
+
+  if (mesFin < mesInicio || (mesFin === mesInicio && diaFin < diaInicio)) {
+    antiguedad--
   }
+
+  console.log(`📅 Antigüedad calculada: ${antiguedad} año${antiguedad !== 1 ? "s" : ""}`)
+  return `${antiguedad} año${antiguedad !== 1 ? "s" : ""}`
+}
+
 
   downloadPdf(): void {
     if (!this.selectedTarjeton) return
