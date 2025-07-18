@@ -327,28 +327,30 @@ export class PdfGeneratorService {
         </div>
 
         <!-- Nombre del operador - Posición específica para PDF -->
-        <div style="
-          position: absolute;
-          top: 120mm;
-          left: 28mm;
-          width: 80mm; 
-          z-index: 3;
-          background: rgba(255, 255, 255, 0.95);
-          padding: 3mm;
-          text-align: center;
-          border-radius: 4px;
-          box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-        ">
-          <div style="
-            font-size: 14px; 
-            font-weight: bold; 
-            color: #000; 
-            line-height: 1.3;
-            text-transform: uppercase;
-          ">
-            ${tarjeton.nombreOperador}
-          </div>
-        </div>
+<div style="
+  position: absolute;
+  top: 120mm;
+  left: 15mm; /* Movido más a la izquierda */
+  width: 120mm; /* Ancho máximo disponible */
+  z-index: 3;
+  background: rgba(255, 255, 255, 0.95);
+  padding: 3mm;
+  text-align: center;
+  border-radius: 4px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+">
+  <div style="
+    font-size: 13px; /* Reducido ligeramente */
+    font-weight: bold; 
+    color: #000; 
+    line-height: 1.3;
+    text-transform: uppercase;
+    white-space: nowrap;
+    overflow: visible; /* Cambiado a visible */
+  ">
+    ${tarjeton.nombreOperador}
+  </div>
+</div>
 
         <!-- Información del Dr. - Posición específica para PDF -->
         <div style="
@@ -464,28 +466,29 @@ export class PdfGeneratorService {
       }
         </div>
 
-                <!-- Nombre del operador - Posición específica para PDF -->
-        <div style="
-          position: absolute;
-          top: 118mm;
-          left: 35mm;
-          width: 75mm;
-          z-index: 3;
-          padding: 3mm;
-          text-align: center;
-          border-radius: 4px;
-          box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-        ">
-          <div style="
-            font-size: 14px; 
-            font-weight: bold; 
-            color: #000; 
-            line-height: 1.3;
-            text-transform: uppercase;
-          ">
-            ${tarjeton.nombreOperador}
-          </div>
-        </div>
+<!-- Nombre del operador - Posición específica para PDF -->
+<div style="
+  position: absolute;
+  top: 118mm;
+  left: 15mm; /* Movido más a la izquierda */
+  width: 120mm; /* Ancho máximo disponible */
+  z-index: 3;
+  padding: 3mm;
+  text-align: center;
+  border-radius: 4px;
+">
+  <div style="
+    font-size: 13px; /* Reducido ligeramente */
+    font-weight: bold; 
+    color: #000; 
+    line-height: 1.3;
+    text-transform: uppercase;
+    white-space: nowrap;
+    overflow: visible; /* Cambiado a visible */
+  ">
+    ${tarjeton.nombreOperador}
+  </div>
+</div>
         
         <!-- Datos del tarjetón - Posiciones específicas para PDF -->
         <div style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 3;">
