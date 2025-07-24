@@ -8,6 +8,7 @@ export interface TarjetonData {
   operador: string
   emision: string
   vence: string,
+  emisionAntigua: string // Nueva propiedad para la fecha de emisión antigua
   fechaAlta: string
   tipoTramite: string
   coordinacion: string
@@ -133,60 +134,25 @@ export class PdfGeneratorService {
     return new Date(a, m - 1, d)
   }
 
-  private calcularAntiguedad(
-    en: string,
-    hasta: string,
-    tipoTramite: string,
-    fechaAlta?: string
-  ): number {
-    // 👉 Si es "Expedición", la antigüedad es 0
-    if (tipoTramite === "Expedición") return 0
+ private calcularAntiguedad(
+  en: string,
+  tipoTramite: string
+): number {
+  if (tipoTramite === "Expedición") return 0;
 
-    // 👉 Si hay fechaAlta válida, usarla como inicio
-    if (fechaAlta) {
-      const fechaInicio = new Date(fechaAlta)
-      const fechaFin = new Date()  // siempre la fecha actual cuando hay fechaAlta
+  const fechaInicio = en.includes("/") ? this.parseDDMMYYYY(en) : new Date(en);
+  const hoy = new Date();
 
-      if (isNaN(fechaInicio.getTime()) || isNaN(fechaFin.getTime())) {
-        console.warn("⚠️ Fechas inválidas (fechaAlta):", { fechaAlta })
-        return 0
-      }
-
-
-      let edad = fechaFin.getFullYear() - fechaInicio.getFullYear()
-      const mesFin = fechaFin.getMonth()
-      const diaFin = fechaFin.getDate()
-      const mesInicio = fechaInicio.getMonth()
-      const diaInicio = fechaInicio.getDate()
-
-      if (mesFin < mesInicio || (mesFin === mesInicio && diaFin < diaInicio)) {
-        edad--
-      }
-
-      return edad < 0 ? 0 : edad
-    }
-
-    // 👉 Si no hay fechaAlta, usar lógica normal con `en` y `hasta`
-    const fechaInicio = en.includes("/") ? this.parseDDMMYYYY(en) : new Date(en)
-    const fechaFin = hasta.includes("/") ? this.parseDDMMYYYY(hasta) : new Date(hasta)
-
-    if (isNaN(fechaInicio.getTime()) || isNaN(fechaFin.getTime())) {
-      console.warn("⚠️ Fechas inválidas:", { en, hasta })
-      return 0
-    }
-
-    let edad = fechaFin.getFullYear() - fechaInicio.getFullYear()
-    const mesFin = fechaFin.getMonth()
-    const diaFin = fechaFin.getDate()
-    const mesInicio = fechaInicio.getMonth()
-    const diaInicio = fechaInicio.getDate()
-
-    if (mesFin < mesInicio || (mesFin === mesInicio && diaFin < diaInicio)) {
-      edad--
-    }
-
-    return edad < 0 ? 0 : edad
+  if (isNaN(fechaInicio.getTime()) || isNaN(hoy.getTime())) {
+    console.warn("⚠️ Fechas inválidas:", { en });
+    return 0;
   }
+
+  const antiguedad = hoy.getFullYear() - fechaInicio.getFullYear();
+  return antiguedad < 0 ? 0 : antiguedad;
+}
+
+
 
 
 
@@ -392,10 +358,8 @@ export class PdfGeneratorService {
   private createPdfReversoHtml(tarjeton: TarjetonData): string {
     const fotografiaBase64 = this.convertBufferToBase64(tarjeton.fotografia)
     const antiguedad = this.calcularAntiguedad(
-      tarjeton.emision,
-      tarjeton.vence,
+      tarjeton.emisionAntigua,
       tarjeton.tipoTramite,
-      tarjeton.fechaAlta
     )
 
 
@@ -538,7 +502,7 @@ export class PdfGeneratorService {
             border-radius: 3px;
           ">
             <span style="font-size: 11px; color: #374151; font-weight: 500;">Modalidad: </span>
-            <span style="font-size: 11px; font-weight: bold; color: #000;">${tarjeton.modalidad === "INDIVIDUAL" ? "Individual" : "Transporte Colectivo"}</span>
+            <span style="font-size: 11px; font-weight: bold; color: #000;">${tarjeton.modalidad}</span>
           </div>
 
           <!-- Tipo de Tarjetón -->

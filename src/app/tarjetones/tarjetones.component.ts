@@ -11,6 +11,7 @@ interface Tarjeton {
   operador: string
   emision: string
   vence: string
+  emisionAntigua: string
   fechaAlta: string
   tipoTramite: string
   coordinacion: string
@@ -210,6 +211,7 @@ export class TarjetonesComponent {
           folio: item.idTarjeton,
           operador: item.folioOperador,
           emision: item.emision,
+          emisionAntigua: item.fechaEmisionAntigua,
           vence: item.vence,
           tipoTramite: item.tramite,
           coordinacion: item.coordinacion,
@@ -248,55 +250,29 @@ export class TarjetonesComponent {
     return new Date(anio, mes - 1, dia)
   }
 
-  getAntiguedad(): string {
-    const tramite = this.selectedTarjeton?.tipoTramite
-    const fechaAltaStr = this.selectedTarjeton?.fechaAlta // formato: "1999-10-01"
+getAntiguedad(): string {
+  const tramite = this.selectedTarjeton?.tipoTramite;
+  const fechaEmisionAntiguaStr = this.selectedTarjeton?.emisionAntigua;
 
-    // 1. Expedición → 0 años
-    if (tramite === "Expedición") {
-      return "0 años"
-    }
-
-    // 2. Si hay fechaAlta → usarla para calcular desde esa fecha hasta hoy
-    if (fechaAltaStr) {
-      const fechaAlta = new Date(fechaAltaStr)
-      const hoy = new Date()
-
-      let antiguedad = hoy.getFullYear() - fechaAlta.getFullYear()
-      const mesAlta = fechaAlta.getMonth()
-      const diaAlta = fechaAlta.getDate()
-      const mesHoy = hoy.getMonth()
-      const diaHoy = hoy.getDate()
-
-      if (mesHoy < mesAlta || (mesHoy === mesAlta && diaHoy < diaAlta)) {
-        antiguedad--
-      }
-
-      console.log(`📅 Antigüedad desde fechaAlta: ${antiguedad} año${antiguedad !== 1 ? "s" : ""}`)
-      return `${antiguedad} año${antiguedad !== 1 ? "s" : ""}`
-    }
-
-    // 3. Si no hay fechaAlta → usar lógica actual con emision y vence
-    if (!this.selectedTarjeton?.emision || !this.selectedTarjeton?.vence) return ""
-
-    const fechaInicio = this.parseDDMMYYYY(this.selectedTarjeton.emision)
-    const fechaFin = this.parseDDMMYYYY(this.selectedTarjeton.vence)
-
-    console.log(`🗓️ Emisión (local): ${fechaInicio.toLocaleDateString()} | Vencimiento (local): ${fechaFin.toLocaleDateString()}`)
-
-    let antiguedad = fechaFin.getFullYear() - fechaInicio.getFullYear()
-    const mesInicio = fechaInicio.getMonth()
-    const diaInicio = fechaInicio.getDate()
-    const mesFin = fechaFin.getMonth()
-    const diaFin = fechaFin.getDate()
-
-    if (mesFin < mesInicio || (mesFin === mesInicio && diaFin < diaInicio)) {
-      antiguedad--
-    }
-
-    console.log(`📅 Antigüedad por emisión-vencimiento: ${antiguedad} año${antiguedad !== 1 ? "s" : ""}`)
-    return `${antiguedad} año${antiguedad !== 1 ? "s" : ""}`
+  if (tramite === "Expedición") {
+    return "0 años";
   }
+
+  if (fechaEmisionAntiguaStr) {
+    const fechaEmisionAntigua = fechaEmisionAntiguaStr.includes("/")
+      ? this.parseDDMMYYYY(fechaEmisionAntiguaStr)
+      : new Date(fechaEmisionAntiguaStr);
+
+    const hoy = new Date();
+    const antiguedad = hoy.getFullYear() - fechaEmisionAntigua.getFullYear();
+
+    return `${antiguedad} año${antiguedad !== 1 ? "s" : ""}`;
+  }
+
+  return "";
+}
+
+
 
 
 
