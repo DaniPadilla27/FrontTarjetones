@@ -251,25 +251,35 @@ export class TarjetonesComponent {
   }
 
 getAntiguedad(): string {
-  const tramite = this.selectedTarjeton?.tipoTramite;
-  const fechaEmisionAntiguaStr = this.selectedTarjeton?.emisionAntigua;
+  if (!this.selectedTarjeton) return "";
+  
+  const antiguedad = this.calcularAntiguedadRobusta(
+    this.selectedTarjeton.emisionAntigua,
+    this.selectedTarjeton.tipoTramite
+  );
+  
+  return `${antiguedad} año${antiguedad !== 1 ? "s" : ""}`;
+}
 
-  if (tramite === "Expedición") {
-    return "0 años";
+// Función auxiliar robusta (agregar al componente)
+private calcularAntiguedadRobusta(en: string, tipoTramite: string): number {
+  if (tipoTramite === "Expedición") return 0;
+  
+  if (!en) {
+    console.warn("⚠️ Fecha de emisión antigua faltante");
+    return 0;
   }
-
-  if (fechaEmisionAntiguaStr) {
-    const fechaEmisionAntigua = fechaEmisionAntiguaStr.includes("/")
-      ? this.parseDDMMYYYY(fechaEmisionAntiguaStr)
-      : new Date(fechaEmisionAntiguaStr);
-
-    const hoy = new Date();
-    const antiguedad = hoy.getFullYear() - fechaEmisionAntigua.getFullYear();
-
-    return `${antiguedad} año${antiguedad !== 1 ? "s" : ""}`;
+  
+  const fechaInicio = en.includes("/") ? this.parseDDMMYYYY(en) : new Date(en);
+  const hoy = new Date();
+  
+  if (isNaN(fechaInicio.getTime()) || isNaN(hoy.getTime())) {
+    console.warn("⚠️ Fechas inválidas:", { en });
+    return 0;
   }
-
-  return "";
+  
+  const antiguedad = hoy.getFullYear() - fechaInicio.getFullYear();
+  return antiguedad < 0 ? 0 : antiguedad;
 }
 
 
